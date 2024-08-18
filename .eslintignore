@@ -1,4 +1,4 @@
 
 {
-  "eslintIgnore": [".prettierrc.js"]
+  "eslintIgnore": [".prettierrc.js", "prisma/schema.prisma", "prisma/.env", "prisma/.env.example", "src/app/api/"]
 }
