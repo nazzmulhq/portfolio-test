@@ -1,0 +1,22 @@
+
+    version: "3.9"
+    services:
+        admin:
+            build:
+                context: ./
+                dockerfile: Dockerfile
+            image: portfolio
+            tty: true
+            restart: unless-stopped
+            container_name: portfolio
+            working_dir: /app/
+            volumes:
+                - ./:/app
+            ports:
+                - "3000:3000"
+            networks:
+                - portfolio
+    networks:
+        portfolio:
+            driver: bridge
+    

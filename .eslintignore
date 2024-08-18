@@ -1,0 +1,4 @@
+
+{
+  "eslintIgnore": [".prettierrc.js"]
+}
