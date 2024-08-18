@@ -4,24 +4,16 @@ import { NextRequest, NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
 export async function GET() {
-    try {
-        const users = await prisma.user.findMany();
-        return NextResponse.json(users);
-    } catch (error) {
-        console.error(error);
-        return NextResponse.json(
-            { error: "Failed to retrieve users" },
-            { status: 500 },
-        );
-    }
+    const users = await prisma.user.findMany();
+    return NextResponse.json(users);
 }
 
 export async function POST(req: NextRequest) {
-    const { name, email, password, cv, picture } = await req.json();
+    const { name, email, cv, password, picture } = await req.json();
 
     try {
         const newUser = await prisma.user.create({
-            data: { name, email, picture, cv, password },
+            data: { name, email, cv, password, picture },
         });
         return NextResponse.json(newUser);
     } catch (error) {
@@ -38,12 +30,11 @@ export async function PUT(req: NextRequest) {
 
     try {
         const updatedUser = await prisma.user.update({
-            where: { id: Number(id) },
+            where: { id },
             data: { name, email },
         });
         return NextResponse.json(updatedUser);
     } catch (error) {
-        console.error(error);
         return NextResponse.json(
             { error: "User update failed" },
             { status: 400 },
@@ -56,11 +47,10 @@ export async function DELETE(req: NextRequest) {
 
     try {
         await prisma.user.delete({
-            where: { id: Number(id) },
+            where: { id },
         });
         return NextResponse.json({ message: "User deleted successfully" });
     } catch (error) {
-        console.error(error);
         return NextResponse.json(
             { error: "User deletion failed" },
             { status: 400 },
