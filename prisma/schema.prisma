@@ -7,10 +7,154 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+model SocialMedia {
+  id        Int      @id @default(autoincrement())
+  name      String
+  url       String
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+
+  userId   Int
+  user     User   @relation(fields: [userId], references: [id])
+}
+
+model Skill {
+  id        Int      @id @default(autoincrement())
+  name      String
+  level     Int
+  icon      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+
+  userId   Int
+  user     User   @relation(fields: [userId], references: [id])
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  image       String
+  link        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime? @updatedAt
+
+  userId   Int
+  user     User   @relation(fields: [userId], references: [id])
+}
+
+model Experience {
+  id          Int      @id @default(autoincrement())
+  title       String
+  company     String
+  location    String
+  startDate   DateTime
+  endDate     DateTime
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime? @updatedAt
+
+  userId   Int
+  user     User   @relation(fields: [userId], references: [id])
+}
+
+model Education {
+  id          Int      @id @default(autoincrement())
+  title       String
+  school      String
+  location    String
+  startDate   DateTime
+  endDate     DateTime
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime? @updatedAt
+
+  userId   Int
+  user     User   @relation(fields: [userId], references: [id])
+}
+
+enum DescriptionType {
+  TEXT
+  CODE
+  IMAGE
+  VIDEO
+}
+
+model Description {
+  id        Int      @id @default(autoincrement())
+  type      DescriptionType
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+
+  summaryId Int
+  summary   Summary @relation(fields: [summaryId], references: [id])
+}
+
+model Summary {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime? @updatedAt
+
+  articleId Int
+  article   Artticle @relation(fields: [articleId], references: [id])
+
+  descriptions Description[]
+}
+
+enum ArtticleType {
+  SINGLE
+  MULTIPLE
+}
+model Artticle {
+  id          Int      @id @default(autoincrement())
+  type        ArtticleType
+  title       String
+  description String
+  image       String
+  link        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime? @updatedAt
+
+  blogId Int
+  blog   Blog   @relation(fields: [blogId], references: [id])
+
+  summaries Summary[]
+}
+
+model Blog {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  image       String
+  link        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime? @updatedAt
+
+  userId   Int
+  user     User   @relation(fields: [userId], references: [id])
+
+  articles Artticle[]
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   name      String
   email     String   @unique
+  password  String
+  picture   String
+  cv        String
   createdAt DateTime @default(now())
   updatedAt DateTime? @updatedAt
+
+  socials   SocialMedia[]
+  skills    Skill[]
+  experiences Experience[]
+  projects  Project[]
+  educations Education[]
+  blogs     Blog[]
 }
