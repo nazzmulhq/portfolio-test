@@ -1,7 +1,8 @@
 import Cookies from "js-cookie";
 
 export default class Api {
-    static baseUrl = process.env.BASE_URL || "http://localhost:3000";
+    static baseUrl =
+        process.env.BASE_URL || "https://portfolio-test-rosy.vercel.app";
     static token = Cookies.get("token");
 
     static async get(url: string, token = true, params = {}, headers = {}) {
