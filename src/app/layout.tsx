@@ -17,6 +17,16 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
+            <head>
+                <meta
+                    content="strict-origin-when-cross-origin"
+                    name="referrer"
+                />
+                <meta
+                    content="width=device-width, initial-scale=1"
+                    name="viewport"
+                />
+            </head>
             <body className={inter.className}>
                 <AntdRegistry>{children}</AntdRegistry>
             </body>
