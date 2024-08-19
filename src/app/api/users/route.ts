@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
+import { hashPassword } from "./../../../lib/auth";
 
 const prisma = new PrismaClient();
 
@@ -10,10 +11,11 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
     const { name, email, cv, password, picture } = await req.json();
+    const HashPassword = await hashPassword(password);
 
     try {
         const newUser = await prisma.user.create({
-            data: { name, email, cv, password, picture },
+            data: { name, email, cv, password: HashPassword, picture },
         });
         return NextResponse.json(newUser);
     } catch (error) {

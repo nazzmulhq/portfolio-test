@@ -1,5 +1,6 @@
 "use client";
 
+import Api from "@src/lib/api";
 import { useEffect, useState } from "react";
 
 interface User {
@@ -12,29 +13,32 @@ export default function UsersPage() {
     const [users, setUsers] = useState<User[]>([]);
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
 
     useEffect(() => {
         fetchUsers();
     }, []);
 
     const fetchUsers = async () => {
-        const response = await fetch("/api/users");
-        const data: User[] = await response.json();
+        const response = await Api.get("/api/users");
+        console.log({ response });
+        const data: User[] = response;
         setUsers(data);
     };
 
     const addUser = async () => {
-        if (!name || !email) {
+        if (!name || !email || !password) {
             return;
         }
         const response = await fetch("/api/users", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, email }),
+            body: JSON.stringify({ name, email, password }),
         });
         if (response.ok) {
             setName("");
             setEmail("");
+            setPassword("");
             fetchUsers();
         } else {
             console.error("Failed to add user");
@@ -92,10 +96,16 @@ export default function UsersPage() {
                 type="email"
                 value={email}
             />
+            <input
+                onChange={e => setPassword(e.target.value)}
+                placeholder="Password"
+                type="password"
+                value={password}
+            />
             <button onClick={addUser}>Add User</button>
             <ul>
-                {users.map(user => (
-                    <li key={user.id}>
+                {users?.map(user => (
+                    <li key={user.email}>
                         <span>
                             {user.name} ({user.email})
                         </span>
