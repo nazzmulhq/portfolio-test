@@ -10,8 +10,13 @@ export default class Api {
             const query = new URLSearchParams(params).toString();
             const response = await fetch(`${this.baseUrl}${url}?${query}`, {
                 headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
+                    "Access-Control-Allow-Headers": "Content-Type",
                     "Content-Type": "application/json",
+
                     Authorization: token ? `Bearer ${this.token}` : "",
+
                     ...headers,
                 },
             });
@@ -26,6 +31,9 @@ export default class Api {
             const response = await fetch(`${this.baseUrl}${url}`, {
                 method: "POST",
                 headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
+                    "Access-Control-Allow-Headers": "Content-Type",
                     "Content-Type": "application/json",
                     Authorization: token ? `Bearer ${this.token}` : "",
                     ...headers,
@@ -43,6 +51,9 @@ export default class Api {
             const response = await fetch(`${this.baseUrl}${url}`, {
                 method: "PUT",
                 headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
+                    "Access-Control-Allow-Headers": "Content-Type",
                     "Content-Type": "application/json",
                     Authorization: token ? `Bearer ${this.token}` : "",
                     ...headers,
@@ -60,6 +71,9 @@ export default class Api {
             const response = await fetch(`${this.baseUrl}${url}`, {
                 method: "DELETE",
                 headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
+                    "Access-Control-Allow-Headers": "Content-Type",
                     "Content-Type": "application/json",
                     Authorization: token ? `Bearer ${this.token}` : "",
                     ...headers,

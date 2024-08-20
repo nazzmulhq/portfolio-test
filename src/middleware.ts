@@ -24,5 +24,5 @@ export function middleware(request: IUser) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-    matcher: "/",
+    matcher: ["/", "/admin"],
 };

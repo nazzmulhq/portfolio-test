@@ -28,7 +28,9 @@ export default function RootLayout({
                 />
             </head>
             <body className={inter.className}>
-                <AntdRegistry>{children}</AntdRegistry>
+                <AntdRegistry>
+                    <main className="h-screen w-screen">{children}</main>
+                </AntdRegistry>
             </body>
         </html>
     );
